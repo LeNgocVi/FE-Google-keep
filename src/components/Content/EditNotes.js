@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import SaveIcon from "@material-ui/icons/Save";
 import axios from "axios";
-const EditNote = ({ title, content, setFetchAgain, id }) => {
+const EditNote = ({ title, content, fetchData, id }) => {
   const closePopupRef = useRef();
   const { register, handleSubmit, formState } = useForm({
     defaultValues: {
@@ -15,7 +15,7 @@ const EditNote = ({ title, content, setFetchAgain, id }) => {
     try {
       console.log("edit");
       const res = await axios.put(`http://localhost:3000/notes/${id}`, data);
-      setFetchAgain(true);
+      await fetchData();
     } catch (err) {
       console.error(err);
     }

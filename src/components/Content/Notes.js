@@ -9,7 +9,7 @@ export default function Notes({
   id,
   handleDelete,
   grid,
-  setFetchAgain,
+  fetchData,
 }) {
   const handleDeleteNotes = () => {
     handleDelete(`${id}`);
@@ -37,7 +37,7 @@ export default function Notes({
           <EditNote
             title={title}
             content={content}
-            setFetchAgain={setFetchAgain}
+            fetchData={fetchData}
             id={id}
           />
         </div>

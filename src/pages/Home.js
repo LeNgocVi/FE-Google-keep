@@ -132,9 +132,9 @@ const Home = () => {
                   id={id}
                   title={title}
                   content={content}
-                  fetchAxios={fetchData}
+                  //   fetchAxios={fetchData}
                   handleDelete={handleDelete}
-                  setFetchAgain={setFetchAgain}
+                  fetchData={fetchData}
                   grid={grid}
                 />
               ))}
