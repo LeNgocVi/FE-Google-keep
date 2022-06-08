@@ -15,6 +15,7 @@ export default function Notes({
     handleDelete(`${id}`);
   };
 
+  //   console.log("id", grid);
   return (
     <>
       <div className={grid}>
@@ -23,7 +24,7 @@ export default function Notes({
           <p>{content}</p>
           <div className="actionButtons">
             <button type="button" className="btn btn-warning">
-              <DeleteForeverIcon onClick={handleDeleteNotes} />
+              <DeleteForeverIcon onClick={() => handleDeleteNotes()} />
             </button>
             <button
               type="button"

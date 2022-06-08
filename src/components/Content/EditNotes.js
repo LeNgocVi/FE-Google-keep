@@ -14,18 +14,17 @@ const EditNote = ({ title, content, fetchData, id }) => {
   const onSubmit = async (data) => {
     try {
       console.log("edit");
-      const res = await axios.put(`http://localhost:3000/notes/${id}`, data);
-      await fetchData();
+      await axios.put(
+        `https://6295b36a75c34f1f3b1f4546.mockapi.io/notes/${id}`,
+        data
+      );
+      await fetchData().then(() => {
+        document.getElementsByClassName("modal-backdrop")[0].click();
+        document.getElementsByClassName("modal-backdrop")[0].remove();
+      });
     } catch (err) {
       console.error(err);
     }
-
-    // Updatem Notes data
-    // var updateNotesFields = docRef.update(data).then(() => {
-    //     document.getElementsByClassName("modal-backdrop")[0].click();
-    //     document.getElementsByClassName("modal-backdrop")[0].remove();
-    //     handleEdit();
-    // });
   };
 
   return (
@@ -63,7 +62,12 @@ const EditNote = ({ title, content, fetchData, id }) => {
                   className="form-control"
                   name="content"
                 />
-                <button type="submit" name="submit" className="addButton">
+                <button
+                  type="submit"
+                  name="submit"
+                  className="addButton"
+                  data-mdb-dismiss="modal"
+                >
                   <SaveIcon />
                 </button>
               </div>

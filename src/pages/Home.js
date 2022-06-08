@@ -31,18 +31,25 @@ const Home = () => {
   };
 
   // add notes
-  const handleSubmitFromApp = (data) => {
+  const handleSubmitFromApp = async (data) => {
     console.log("Data from App", data);
-    setNotes((prevData) => [...prevData, data]);
-    setFetchAgain(!fetchAgain);
+    // setNotes((prevData) => [...prevData, data]);
+    // setFetchAgain(!fetchAgain);
+    await fetchData();
   };
 
   const fetchData = async () => {
+    console.log("fet");
     setIsLoading(true);
     try {
-      const { data: response } = await axios.get("http://localhost:3000/notes");
-      setNotes(response);
-      console.log(response);
+      //   await axios.get("http://localhost:3000/notes");
+
+      const { data } = await axios.get(
+        "https://6295b36a75c34f1f3b1f4546.mockapi.io/notes"
+      );
+      console.log("sdsdsdsdsds", notes, data);
+      setNotes(data);
+      console.log("ddddđ", notes, data);
     } catch (error) {
       console.error(error.message);
     } finally {
@@ -50,25 +57,28 @@ const Home = () => {
     }
   };
 
+  console.log("note", notes);
   useEffect(() => {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    (fetchAgain || refresh) && fetchData().finally(() => setFetchAgain(false));
-  }, [fetchAgain, refresh]);
+  //   useEffect(() => {
+  //     (fetchAgain || refresh) && fetchData().finally(() => setFetchAgain(false));
+  //   }, [fetchAgain, refresh]);
 
   // delete note
   const handleDelete = async (id) => {
-    // console.log(id)
+    console.log(id);
     // DELETE request using axios with async/await
-    const res = await axios.delete(`http://localhost:3000/notes/${id}`);
-    // console.log("res ", res);
+    const res = await axios.delete(
+      `https://6295b36a75c34f1f3b1f4546.mockapi.io/notes/${id}`
+    );
+    console.log("ressssssssss ", res);
     if (res.status === 200) {
       setFetchAgain(!fetchAgain);
     }
-    //setFetchAgain(true);
     await setNotes();
+    await fetchData();
   };
 
   return (
@@ -79,7 +89,7 @@ const Home = () => {
         setGrid={setGrid}
         grid={grid}
       />
-      <div className={`sideBar text-white ${menuOpen ? "open" : ""}`}>
+      <div className={`sideBar text-white ${menuOpen && "open"}`}>
         <ul>
           <li>
             <span className="icon">
@@ -113,7 +123,7 @@ const Home = () => {
           </li>
         </ul>
       </div>
-      <div className={`mainContent ${menuOpen ? "open" : ""}`}>
+      <div className={`mainContent ${menuOpen && "open"}`}>
         <CreateNoteForm handleSubmitFromApp={handleSubmitFromApp} />
         <div className="container">
           <div className="row">
@@ -125,19 +135,19 @@ const Home = () => {
               ""
             )}
             {!isLoading &&
-              notes &&
-              notes.map(({ title, content, id }) => (
-                <Notes
-                  key={id}
-                  id={id}
-                  title={title}
-                  content={content}
-                  //   fetchAxios={fetchData}
-                  handleDelete={handleDelete}
-                  fetchData={fetchData}
-                  grid={grid}
-                />
-              ))}
+              notes.map(({ title, content, id }, index) => {
+                console.log(index);
+                return (
+                  <Notes
+                    id={id}
+                    title={title}
+                    content={content}
+                    handleDelete={handleDelete}
+                    fetchData={fetchData}
+                    grid={grid}
+                  />
+                );
+              })}
           </div>
         </div>
       </div>
