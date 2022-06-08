@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Variables.scss";
 import Notes from "../components/Content/Notes";
-// import EditNote from '../components/Content/EditNotes';
 import CreateNoteForm from "../components/Content/CreateNoteForm";
-
 import Header from "../components/header/Header";
 import DeleteOutlineIcon from "@material-ui/icons/DeleteOutline";
 import ArchiveIcon from "@material-ui/icons/Archive";
